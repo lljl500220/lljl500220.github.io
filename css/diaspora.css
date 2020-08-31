@@ -1087,6 +1087,8 @@ h1.title {
     align-items: center;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
+    font-family: 楷体;
+    letter-spacing: 2px;
 }
 
 .article>div {
@@ -1268,12 +1270,32 @@ h1.title {
 
 .content a {
     background: transparent;
-    color: #1980e6;
-    text-decoration: none;
+    color: GoldEnrod;
+    border-bottom: 1px solid GoldEnrod;
+    padding-bottom: 2px;
+}
+
+@-webkit-keyframes ahover {
+    from {
+        background-color: transparent;
+    }
+    to {
+        background-color: GoldEnrod;
+    }
 }
 
 .content a:hover {
-    color: #518dca;
+    animation: ahover 0.5s linear;
+    -moz-animation: ahover 0.5s linear;
+    -webkit-animation: ahover 0.5s linear;
+    -o-animation: ahover 0.5s linear;
+    animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    color: white;
+    border-bottom: 0px solid GoldEnrod;
+    padding-bottom: 3px;
 }
 
 .content hr {
@@ -1371,7 +1393,7 @@ h1.title {
     margin: 0 0 1.1em;
     border-left: 3px solid #efefef;
     border-left-width: 6px;
-    background-color: rgba(119, 119, 119, 0.05);
+    background-color: rgba(119, 119, 119, 0);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     padding: 15px 20px;
