@@ -194,10 +194,32 @@ var Diaspora = {
         }
         id.style.left = (_width - parseInt(id.style.width)) / 2 + 'px';
         id.style.top = (_height - parseInt(id.style.height)) / 2 + 'px';
+    },
+
+    runthods() {
+        var date1 = new Date('2020-08-25 14:32:20 '); //开始时间
+        var date2 = new Date(); //结束时间
+        var date3 = date2.getTime() - date1.getTime() //时间差的毫秒数
+        var days = Math.floor(date3 / (24 * 3600 * 1000)) // 计算出相差天数
+            //计算出小时数
+        var leave1 = date3 % (24 * 3600 * 1000) //计算天数后剩余的毫秒数
+        var hours = Math.floor(leave1 / (3600 * 1000))
+
+        //计算出相差分钟数
+        var leave2 = leave1 % (3600 * 1000) //计算小时数后剩余的毫秒数
+        var minutes = Math.floor(leave2 / (60 * 1000))
+
+        //计算出相差秒数
+        var leave3 = leave2 % (60 * 1000) //计算分钟数后剩余的毫秒数
+        var seconds = Math.round(leave3 / 1000)
+
+        $("#datetab").text(days + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒")
     }
 };
 
+
 $(function() {
+    setInterval(Diaspora.runthods, 1000);
     if (Diaspora.P()) {
         $('body').addClass('touch')
     }

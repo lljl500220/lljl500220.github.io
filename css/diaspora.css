@@ -1284,6 +1284,24 @@ h1.title {
     }
 }
 
+@-moz-keyframes ahover {
+    from {
+        background-color: transparent;
+    }
+    to {
+        background-color: GoldEnrod;
+    }
+}
+
+@-o-keyframes ahover {
+    from {
+        background-color: transparent;
+    }
+    to {
+        background-color: GoldEnrod;
+    }
+}
+
 .content a:hover {
     animation: ahover 0.5s linear;
     -moz-animation: ahover 0.5s linear;
@@ -1401,6 +1419,24 @@ h1.title {
 
 .content blockquote p {
     margin: 0;
+}
+
+.wife {
+    background-size: contain;
+    background-image: url("/img/alion.jpg");
+    width: 150px;
+    height: 150px;
+    margin-left: 70%;
+    margin-top: -150px;
+}
+
+.wife:hover {
+    background-size: contain;
+    background-image: url("/img/alioff.jpg");
+    width: 150px;
+    height: 150px;
+    margin-left: 70%;
+    margin-top: -150px;
 }
 
 .content table {
