@@ -47,7 +47,7 @@
     <div id="single">
     <div id="top" style="display: block;">
     <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="htttp://qinzhuan.top"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
     <h3 class="subtitle">Hello World</h3>
     <div class="social">
@@ -61,8 +61,8 @@
     <div class="scrollbar"></div>
 </div>
 
-    <div class="section">
-        <div class="article">
+        <div class="section">
+            <div class="article">
     <div class='main'>
         <h1 class="title">
             Hello World
@@ -105,32 +105,30 @@
                     </ul>
                     
         </div>
-        
-    <div id="valine"></div>
-    <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
-    <script>
-        window.onload = function() {
-            var loadValine = function() {
-                new Valine({
-                    el: '#valine',
-                    app_id: "QC4tCPeBKE7H9au0tliJnjcN-gzGzoHsz",
-                    app_key: "Hn5DVX5OunE8zxYuTRIF0KIU",
-                    placeholder: "清风徐来惊睡余，遂超羲皇傲几蘧",
-                    avatar: "mp",
-                    pageSize: "10",
-                    lang: "zh-CN",
-                });
-            }
-            if (true) {
-                loadValine();
-            }
-        };
-    </script>
-    
+        <div id="valine">
+</div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script src=""></script>
+<script>
+    window.onload = function() {
+        var loadValine = function() {
+            new Valine({
+                el: '#valine',
+                app_id: "QC4tCPeBKE7H9au0tliJnjcN-gzGzoHsz",
+                app_key: "Hn5DVX5OunE8zxYuTRIF0KIU",
+                placeholder: "金玉其内，败絮其外 金玉其外，败絮其中",
+                avatar: "mp",
+                pageSize: "10",
+                lang: "zh-CN",
+            });
+        }
+        loadValine();
+    };
+</script>
     </div>
     
 </div>
-    </div>
+        </div>
 </div>
 </body>
 
