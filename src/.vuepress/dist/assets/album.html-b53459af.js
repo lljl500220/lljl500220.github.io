@@ -1,1 +1,0 @@
-import{_ as e,V as t,W as _,X as c}from"./framework-1e8419b0.js";const o={},s=c("p",null,"#画册",-1),n=[s];function a(l,r){return t(),_("div",null,n)}const u=e(o,[["render",a],["__file","album.html.vue"]]);export{u as default};
