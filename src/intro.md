@@ -1,6 +1,7 @@
 ---
 icon: person
 sidebar: false
+title: 自我介绍
 date: 2022-07-10
 timeline: true
 category:
@@ -8,8 +9,6 @@ category:
 tag:
 - About
 ---
-
-# 自我介绍
 
 很高心认识你，我是罗龙江，一个正在成长中的前端工程师！
 
