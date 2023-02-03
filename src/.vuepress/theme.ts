@@ -10,6 +10,8 @@ export default hopeTheme({
     url: "https://qinzhuan.top",
   },
 
+  favicon: "/assets/favicon.png",
+
   iconAssets: "iconfont",
 
   logo: "/assets/favicon.png",
@@ -47,6 +49,7 @@ export default hopeTheme({
 
   plugins: {
     blog: true,
+    copyCode:{},
 
     // If you don’t need comment feature, you can remove following option
     // The following config is for demo ONLY, if you need comment feature, please generate and use your own config, see comment plugin documentation for details.
@@ -73,6 +76,7 @@ export default hopeTheme({
       // provider: "Waline",
       // serverURL: "https://vuepress-theme-hope-comment.vercel.app",
     },
+
 
     // Disable features you don’t want here
     mdEnhance: {
@@ -101,11 +105,11 @@ export default hopeTheme({
       stylize: [
         {
           matcher: "Recommended",
-          replacer: ({ tag }) => {
+          replacer: ({tag}) => {
             if (tag === "em")
               return {
                 tag: "Badge",
-                attrs: { type: "tip" },
+                attrs: {type: "tip"},
                 content: "Recommended",
               };
           },
@@ -118,4 +122,5 @@ export default hopeTheme({
       vuePlayground: true,
     },
   },
+
 });
