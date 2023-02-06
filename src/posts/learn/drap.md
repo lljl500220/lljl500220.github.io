@@ -41,7 +41,7 @@ function drop(ev:any) {
 ```
 
 这方法能够快速的拖动元素到目标容器中，但是一旦出现某种情况，需要自由的拖动元素到任意位置，一般就需要使用到鼠标事件，比较麻烦。
-所以我思考了一下，鼠标事件貌似也能用于drag api。
+通过css属性设置，也能达到响应的效果。
 
 思路是这样的：仍然使用drag拖动元素，给一个比较大的目标容器，计算鼠标坐标和容器边框的相对距离，对拖动元素设置css即可。比如上方的代码，
 最终drag1的元素会被拖动到dorp1的左上方。
@@ -52,3 +52,25 @@ function drop(ev:any) {
 :::
 
 如果我想让dorp1放置到drag1的右下方，那就需要自己去定位和设置css属性了。
+
+上方代码修改如下
+```ts
+function drop(ev:any) {
+  ev.preventDefault();
+  let data = ev.dataTransfer.getData("Text");
+  ev.target.appendChild(document.getElementById(data));
+  setupPosition(data,50,50)
+}
+
+function setupPosition(target:string,left:number,top:number){
+  let doc:any = window.document.getElementById(target)
+  doc.style.position = "absolute"
+  doc.style.left = left.toString() + "px"
+  doc.style.top = left.toString() + "px"
+}
+```
+
+:::center
+![上方代码拖动结果](/learn/drap_center.png =200x200)
+:::
+实现的效果从拖动到左上方变成了居中，当然也可以设置其它css属性。
