@@ -2,6 +2,12 @@
 title: html5 拖放api
 date: 2022-7-20
 icon: html
+isOriginal: true
+category:
+- 前端基础
+tag:
+- html5
+- JavaScript
 ---
 
 前两日收到极客公众号的广告推送，看到一道面试题，内容大约是：html5实现拖拽的方式有哪些？

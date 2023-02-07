@@ -1,6 +1,12 @@
 ---
 title: md中使用vue语法
 icon: edit
+isOriginal: true
+category:
+- 网站构建
+tag:
+- vuepress
+- markdown
 ---
 
 开始使用vuepress的时候，学习到了在md文件中直接使用vue语法和语法糖的方法

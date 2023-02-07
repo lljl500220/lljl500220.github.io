@@ -95,6 +95,7 @@ export default hopeTheme({
       include: true,
       katex: true,
       mark: true,
+      tasklist: true,
       mermaid: true,
       playground: {
         presets: ["ts", "vue"],

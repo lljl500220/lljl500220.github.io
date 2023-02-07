@@ -4,7 +4,8 @@ export const zhSidebar = sidebar({
     "/":[
 
     ],
-    "/work/":"structure",
-    "/learn":"structure",
+    "/posts/work/":"structure",
+    "/posts/learn/note/":"structure",
+    "/posts/learn/simulation/":"structure",
     "/posts/carefree/":"structure"
 });

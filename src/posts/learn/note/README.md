@@ -1,10 +1,10 @@
 ---
 icon: home
 date: 2022-7-12
-title: 闲情逸致
+title: 学习记录
 sticky: 10
 ---
 
-游戏和其它娱乐项目。
+记录学习的内容。
 
 <!-- more -->
