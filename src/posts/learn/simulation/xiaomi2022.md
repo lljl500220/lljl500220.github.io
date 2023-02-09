@@ -5,10 +5,11 @@ date: 2022-11-1
 isOriginal: true
 category:
 - 前端基础
+- 算法
+- 笔试
 tag:
 - html5
 - JavaScript
-- 算法
 ---
 
 1. 关于 <!DOCTYPE> 下列说法错误的是
