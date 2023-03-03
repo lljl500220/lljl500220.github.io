@@ -5,6 +5,7 @@ title: 自我介绍
 date: 2022-07-10
 timeline: true
 article: false
+footer: 看我浪迹多逍遥o(*≧▽≦)ツ┏━┓拍桌狂笑
 category:
 - 自我介绍
 tag:
