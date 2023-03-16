@@ -12,20 +12,22 @@ export const zhNavbar = navbar([
     }, {
         text: "砺剑",
         icon: "/assets/icon/jian_16.svg",
+        prefix: "/posts/learn",
         children: [
             {
                 text: "刷题笔记",
-                prefix: "/posts/learn/simulation/",
-                children: [
-                    "README.md"
-                ]
+                icon: "edit",
+                link: "/simulation/"
             }, {
                 text: "学习笔记",
-                prefix: "/posts/learn/note/",
-                children: [
-                    "README.md"
-                ]
+                icon: "note",
+                link: "/note/",
             },
+            {
+                text: "算法笔记",
+                icon: "code",
+                link: "/algorithm/",
+            }
         ],
     }, {
         text: "闲情逸致",
