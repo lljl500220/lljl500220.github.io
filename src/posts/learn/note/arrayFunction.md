@@ -26,7 +26,7 @@ arrTest.length = 5
 console.log(arrTest[4]) //undefined
 arrTest.length = 2
 console.log(arrTest) //[1,2]
-```
+``` 
 ## Array类的静态方法
 1. Array.from()
 从一个类数组对象中创建数组实例。常用于数组去重之类的操作，以下是一个去重的例子：
