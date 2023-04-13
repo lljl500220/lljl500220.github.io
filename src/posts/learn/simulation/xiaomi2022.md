@@ -3,13 +3,10 @@ title: 小米2022秋招
 icon: edit
 date: 2022-11-1
 isOriginal: true
-category:
-- 前端基础
-- 算法
-- 笔试
+category: 前端基础
 tag:
 - html5
-- JavaScript
+- javaScript
 ---
 
 1. 关于 <!DOCTYPE> 下列说法错误的是

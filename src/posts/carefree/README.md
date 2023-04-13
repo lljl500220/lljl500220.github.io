@@ -1,7 +1,7 @@
 ---
 icon: home
 date: 2022-7-12 
-title: 闲情逸致
+title: 技术杂谈
 article: false
 ---
 

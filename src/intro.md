@@ -6,14 +6,13 @@ date: 2022-07-10
 timeline: true
 article: false
 footer: 看我浪迹多逍遥o(*≧▽≦)ツ┏━┓拍桌狂笑
-category:
-- 自我介绍
+category: 自我介绍
 tag:
 - About
 
 ---
 
-很高心认识你，我是罗龙江，一个正在成长中的前端工程师！
+很高心认识你，我是罗龙江，一个正在成长中的前端工程师！欢迎你来看我略显逗比的文章。
 
 <!-- more -->
 

@@ -2,8 +2,7 @@
 title: 匈牙利算法学习
 icon: code
 isOriginal: true
-category:
-- 算法
+category: 算法
 tag:
 - typeScript
 - algorithm

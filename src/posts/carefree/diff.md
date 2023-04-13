@@ -2,8 +2,7 @@
 title: diff算法和ast
 icon: vue
 isOriginal: true
-category:
-- 技术杂谈
+category: 技术杂谈
 tag:
 - vue3
 ---

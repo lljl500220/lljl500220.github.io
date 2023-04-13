@@ -34,7 +34,9 @@ export const zhNavbar = navbar([
         icon: "/assets/icon/zheshan.svg",
         prefix: "/posts/carefree/",
         children: [
-            "README.md"
+            "README.md",
+            "electron.md"
+
         ],
     },
 ]);

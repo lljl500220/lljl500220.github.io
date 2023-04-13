@@ -2,8 +2,7 @@
 title: md中使用vue语法
 icon: edit
 isOriginal: true
-category:
-- 网站构建
+category: 网站构建
 tag:
 - vuepress
 - markdown
