@@ -65,4 +65,184 @@ electron拥有一个主进程+n个渲染进程，主进程运行在node.js中，
 可以理解为浏览器打开的一个个tab一样，google浏览器的多进程模式也是基于这样的设计完成的。刚刚我们打开的那个页面，嵌入的index.html就是一个渲染进程，而打开这个窗口的能力就是来自主进程。
 
 ### 预加载脚本
+上文说到，主进程和渲染进程之间无法进行直接通信，那有些内容又确实需要进行通信该咋办咧？搭个桥嘛，所以预加载脚本就应运而生，它作为一个中间件提供了主进程往渲染进程传递内容或者
+渲染进程往主进程请求内容的能力。
 
+### 主进程实例
+打开新建好的工程，其结构应该长这样：
+
+![目录结构](/carefree/files.png)
+
+主进程应该被写在/src/main/index.ts文件中，一起来看下这个文件：
+
+```typescript
+//index.ts
+import { app, shell, BrowserWindow } from 'electron'
+import { join } from 'path'
+import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import icon from '../../resources/icon.png?asset'
+
+function createWindow(): void {
+    // 新建窗口
+    const mainWindow = new BrowserWindow({
+        width: 900,
+        height: 670,
+        show: false,
+        autoHideMenuBar: true,
+        ...(process.platform === 'linux' ? { icon } : {}),
+        webPreferences: {
+            preload: join(__dirname, '../preload/index.js'),
+            sandbox: false
+        }
+    })
+
+    mainWindow.on('ready-to-show', () => {
+        mainWindow.show()
+    })
+
+    mainWindow.webContents.setWindowOpenHandler((details) => {
+        shell.openExternal(details.url)
+        return { action: 'deny' }
+    })
+
+    // 如果是在开发模式下，loadURL方法会加载vite服务的地址，比如http://localhost:8080
+    // 如果是打包之后，loadFile方法会加载一个基于当前文件夹地址加上renderer/index.html的文件
+    // 其实就是我们vue程序的那个index.html
+    if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+        mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+    } else {
+        mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    }
+}
+
+
+// whenReady方法会告诉你electron已经准备好了，可以加载了
+// 此外，有很多的方法和api只能在whenReady之后使用，比如icp模块
+app.whenReady().then(() => {
+    // Set app user model id for windows
+    electronApp.setAppUserModelId('com.electron')
+
+    // Default open or close DevTools by F12 in development
+    // and ignore CommandOrControl + R in production.
+    // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
+    app.on('browser-window-created', (_, window) => {
+        optimizer.watchWindowShortcuts(window)
+    })
+
+    createWindow()
+
+    app.on('activate', function () {
+        // On macOS it's common to re-create a window in the app when the
+        // dock icon is clicked and there are no other windows open.
+        if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    })
+})
+
+// Quit when all windows are closed, except on macOS. There, it's common
+// for applications and their menu bar to stay active until the user quits
+// explicitly with Cmd + Q.
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit()
+    }
+})
+
+// In this file you can include the rest of your app"s specific main process
+// code. You can also put them in separate files and require them here.
+
+```
+
+首先跃入眼帘的是createWindow方法，方法中创建了一个BrowserWindow实例名为mainWindow，mainWindow几个参数
+```typescript
+  const mainWindow = new BrowserWindow({
+    width: 900, //宽度
+    height: 670, //高度
+    show: false, //是否一开始就显示
+    autoHideMenuBar: true, //自动隐藏左上方的工具栏
+    ...(process.platform === 'linux' ? { icon } : {}), //设置程序icon
+    webPreferences: {
+        preload: join(__dirname, '../preload/index.js'), //预加载脚本地址
+        sandbox: false //不是很懂这个sandbox，实际上开启之后也不会对程序有直观影响
+    }
+})
+```
+由于我们将show属性设置为了false，所以只执行createWindow将无法打开窗口。继续向下看：
+```typescript
+// ready-to-show事件定义了一个监听，当index.html已经加载完毕后就会触发。
+mainWindow.on('ready-to-show', () => {
+    // BrowserWindow.show方法打开当前实例窗口
+    // 从这个位置之后就能看到窗口弹出了
+    mainWindow.show()
+})
+    
+// 用于替换window.open方法，这里反悔了deny，则永远不会打开新窗口，需要打开新窗口则需要需要新建一个BrowserWindow实例打开
+mainWindow.webContents.setWindowOpenHandler((details) => {
+    //以桌面的默认方式打开url，有可能是一个文件。
+    shell.openExternal(details.url)
+    return { action: 'deny' }
+})
+
+// 如果是在开发模式下，loadURL方法会加载vite服务的地址，比如http://localhost:8080
+// 如果是打包之后，loadFile方法会加载一个基于当前文件夹地址加上renderer/index.html的文件
+// 其实就是我们vue程序的那个index.html
+if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+} else {
+    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+}
+```
+
+到这里为止呢，主进程的大部分代码就已经结束了，接下来就是在app.whenReady事件中执行creatWindow方法创建实例就可以啦。
+
+### 预加载脚本
+ 上文说到，预加载脚本用来解决主进程和渲染进程通信的问题。预加载脚本在preload文件夹中，首先来看一段预加载脚本的代码：
+```typescript
+import { contextBridge } from 'electron'
+import { electronAPI } from '@electron-toolkit/preload'
+
+// Custom APIs for renderer
+const api = {}
+
+// process.contextIsolated 上下文隔离，这个值要在主进程的webPreferences中定义，一般都是为true的。
+// 如果将这个值定义为false，则在渲染进程中可以直接访问node的api而不需要预加载脚本。
+if (process.contextIsolated) {
+    try {
+        // 通过上下文桥将electronAPI暴露到渲染进程中。
+        contextBridge.exposeInMainWorld('electron', electronAPI)
+        contextBridge.exposeInMainWorld('api', api)
+    } catch (error) {
+        console.error(error)
+    }
+} else {
+    // @ts-ignore (define in dts)
+    window.electron = electronAPI
+    // @ts-ignore (define in dts)
+    window.api = api
+}
+```
+通过上面的预加载脚本，我们就可以在vue代码中访问electronAPI了
+```vue
+<script setup lang="ts">
+import { reactive } from 'vue'
+const versions = reactive({ ...window.electron.process.versions })
+</script>
+
+<template>
+  <ul class="versions">
+    <li class="electron-version">Electron v{{ versions.electron }}</li>
+    <li class="chrome-version">Chromium v{{ versions.chrome }}</li>
+    <li class="node-version">Node v{{ versions.node }}</li>
+    <li class="v8-version">V8 v{{ versions.v8 }}</li>
+  </ul>
+</template>
+
+```
+
+## 渲染进程主动请求主进程信息
+
+### 启动动画实例
+上面说了进程间的通信以及创建一个初始的window，接下来我们实现一个app常见的启动动画：
+
+![启动动画](/carefree/动画.gif)
+
+上面这个动画的文件可以在[项目地址github](https://github.com/lljl500220/electron)这里找到。
