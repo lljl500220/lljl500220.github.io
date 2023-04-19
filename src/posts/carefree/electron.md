@@ -246,3 +246,100 @@ const versions = reactive({ ...window.electron.process.versions })
 ![启动动画](/carefree/动画.gif)
 
 上面这个动画的文件可以在[项目地址github](https://github.com/lljl500220/electron)这里找到。
+
+接下来我们要实现：
+1. 在主界面打开之前，先打开这个页面
+2. 模拟主界面加载，比如接口请求完毕，文件请求完毕等，异步关闭该界面，打开主界面
+
+首先实现第一步： 想要打开一个窗口，就需要用到我们上面提到的BrowserWindow类，那么就存在了两个BrowserWindow实例，现在需要将这两个实例异步加载。
+
+首先在resources文件夹中写入上面的loading.html，如下：
+
+![loading.html](/carefree/index-html.jpg)
+
+然后在main/index.ts文件中新加如下代码：
+```typescript
+// main/index.ts
+const showLoading = (): void => {
+    load = new BrowserWindow({
+        width: 960,
+        height: 670,
+        frame: false,
+        backgroundColor: '#2376b7',
+        webPreferences: {
+            contextIsolation: true,
+            // preload: join(__dirname, '../preload/index.js'),
+            sandbox: false
+        }
+    })
+    // load.webContents.openDevTools()
+    load.loadFile(join(__dirname, '../../resources/loading.html'))
+
+    load.on('show', createWindow)
+    load.show()
+}
+```
+
+其中，load变量需要定义为全局变量，因为我们等下要在主窗口中将其关闭。
+
+原来whenReady事件中，调用了createWindow()方法唤起主界面，现在我们需要修改为showLoading()方法，先行唤起我们的启动页。
+```typescript
+-- createWindow()
+++ showLoading()
+```
+
+唤醒启动页之后，需要模拟一个等待的过程，比如网络请求啊，本地文件读取啊之类的事件。这里我们模拟一下在渲染进程，也就是我们的app
+中发起网络请求，等待其返回之后关闭启动页，打开主页面的过程。
+
+要实现上面这个效果，就需要在渲染进程和主进程之间进行通信，我们现在预加载脚本中添加一个函数：
+
+```typescript
+ contextBridge.exposeInMainWorld('api', {
+    ping: () => ipcRenderer.invoke('ping')
+})
+```
+
+然后在主进程中监听ipcMain：
+
+```typescript
+  ipcMain.handle('ping', () => {
+    if (load) {
+        //启动页隐藏、关闭
+        load.hide()
+        load.close()
+    }
+    //主页面去除menu
+    Menu.setApplicationMenu(null)
+    //主页面最大化
+    mainWindow.maximize()
+    //主页面显示
+    mainWindow.show()
+    //返回了屏幕尺寸
+    return mainWindow.getContentSize()
+})
+```
+
+然后在我们的渲染进程触发window.ping方法就好啦：
+
+```typescript
+//index.vue
+
+const ping = async () => {
+    //@ts-ignore
+    let a: number[] = await window.api.ping()
+    rem.value = a[0] / 100 + 'px'
+    localStorage.setItem('rem', (a[0] / 100).toString())
+    document.getElementsByTagName('html')[0].style['font-size'] = rem.value
+    document.getElementsByTagName('html')[0].style['height'] = a[1] + 'px'
+    document.getElementsByTagName('html')[0].style['width'] = a[0] + 'px'
+    document.getElementsByTagName('body')[0].style['height'] = a[1] + 'px'
+    document.getElementsByTagName('body')[0].style['width'] = a[0] + 'px'
+    resetChart('贵州', 0)
+}
+
+setTimeout(() => {
+    ping()
+}, 500)
+```
+
+到这里呢，electron基本的使用已经就完成啦，它仍然有非常多的api需要自己去学习，我只是记录自己学习的过程，更多的内容请前往[electron](https://www.electronjs.org/zh/docs/latest/)自主学习吧！
