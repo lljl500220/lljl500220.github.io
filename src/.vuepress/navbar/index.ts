@@ -5,9 +5,14 @@ export const zhNavbar = navbar([
     {
         text: "走马江湖",
         icon: "/assets/icon/jiu_16.svg",
-        prefix: "/posts/work/",
+        prefix: "/posts/work",
         children: [
-            "README.md"
+            "/README.md",
+            {
+                text: "EPD研发中心前端开发规范JS篇",
+                icon: "html",
+                link: "/JavaScript/",
+            }
         ],
     }, {
         text: "砺剑",
@@ -36,7 +41,6 @@ export const zhNavbar = navbar([
         children: [
             "README.md",
             "electron.md"
-
         ],
     },
 ]);
