@@ -98,12 +98,70 @@ tag:
 
 3. 主线程任务中有promise或者MutationObserver或者queueMicrotask
     ```javascript
-    
-    ```
-4. 主线程任务中既有延时任务也有promise或者MutationObserver或者queueMicrotask
-    ```javascript
-    
-    ```
+      function log(val) {
+      console.log(val)
+      }
+      
+      setTimeout(function () {
+      log(1)
+      }, 0);
+      
+      setTimeout(function () {
+      log(2)
+      }, 1000);
+      
+      let promise = new Promise(resolve => {
+      console.log('init promise')
+      setTimeout(()=>{
+      resolve('promise resolve')
+      }, 999)
+      })
+      
+      promise.then(res=>{
+      console.log(res)
+      })
+      
+      log(3)
    
+   //out 3 1 sleep 999ms promis resolve 1ms 2
+    ```
+在这段代码中，我们加入了一个promise，它将一个settimeout塞到了微任务中，这个微任务又将回调函数塞到了延时队列中。如果等待时间不是999而是1000，那么执行结果将是 3 1 2 promise resolve
+:::tip 注意
+请注意，这段代码有部分人拿到编辑器或者node环境下执行可能会有不同的结果，因为node环境是使用多线程执行的js代码，而浏览器则是使用单线程，在处理上有些许差异！
+:::
+
 ### js为什么有时候会阻塞页面渲染
+在开发过程中，我总会发现有些萌妹子写的代码，明明点击了一个按钮或者是改变了一个文本，但是要隔很久才出现效果，不知道其它小伙伴有没有遇到过，我们结合一段代码来说一下这种情况。
+```html
+<h1>我是一段文本</h1>
+<button>change</button>
+```
+```javascript
+var h1 = document.querySelector('h1');
+      var btn = document.querySelector('button');
+
+      // 死循环指定的时间
+      function delay(duration) {
+        var start = Date.now();
+        while (Date.now() - start < duration) {}
+      }
+
+      btn.onclick = function () {
+        h1.textContent = '这段文本现在被改变了！';
+        delay(3000);
+      };
+```
+现在问题来了，当change按钮被点击后，文本会立马改变吗？  
+答案是文本内容实际上已经被改变了，但是视觉效果上要延迟三秒才改变。为什么会造成这种情况，引入我们上面说过的各种任务队列的知识：
+1. 一开始，主线程读取了js代码，定义了h1，btn，delay函数，并且向其它进程(浏览器进程)添加了一个监听。
+2. 随后点击事件发生，执行到`h1.textContent = '这段文本现在被改变了'`，现在文本已经被改变了。但是文本改变了，不代表页面能改变，上面提到了，主线程负责各种各样的事情，
+比如执行html，css，js，绘制等等，现在内容改变了，页面是需要重新绘制的，所以主线程向一个任务队列中添加了一个重新绘制的任务，该任务和其他的队列任务一样正在排队。
+3. 随后执行到`delay(3000)`，在这个函数中，很容易看到，这是在堵塞主线程3000ms，所以主线程在这3s的时间里一直在执行delay函数的内容，并不认为当前函数已经结束了。
+4. 3s结束后，再去其它的队列中获取到重新渲染的任务，才将h1的内容改变。
 ### 任务有没有优先级
+>任务没有优先级，但是队列存在优先级
+
+在w3c的标准中，微任务队列优先级最高，其它的队列w3c并没有进行强硬的要求，但是，从v8引擎的源代码来看，交互队列的优先级仅次于微队列。
+
+---
+好啦，本篇的内容就到这啦，下一次是浏览器的渲染原理。
