@@ -19,14 +19,14 @@ tag:
 - 发布到npm
 - 只适配移动端
 
-# 新建项目
+## 新建项目
 老生常谈了
 ```shell
 npm create vite@latest my-app -- --template vue-ts
 ```
 我添加了eslint的相关能力和包，自己按需添加吧
 
-# 表情获取
+## 表情获取
 我是从[https://www.emojiall.com/](https://www.emojiall.com/)这个网站获取的表情，提供了Unicode的编码，或者直接复制该表情也可以，我这里选择了直接复制，按照你的项目需求去做。
 
 ![emoji样例](/learn/emoji_demo.png)
