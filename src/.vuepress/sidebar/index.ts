@@ -8,5 +8,6 @@ export const zhSidebar = sidebar({
     "/posts/learn/note/":"structure",
     "/posts/learn/simulation/":"structure",
     "/posts/learn/algorithm/":"structure",
+    "/posts/learn/rxjs/":"structure",
     "/posts/carefree/":"structure"
 });

@@ -32,6 +32,11 @@ export const zhNavbar = navbar([
                 text: "算法笔记",
                 icon: "code",
                 link: "/algorithm/",
+            },
+            {
+                text: "RXJS",
+                icon: "code",
+                link: "/rxjs/",
             }
         ],
     }, {
