@@ -77,8 +77,6 @@ const debounce = (func: Function, duration = 1000) => {
 
 const new_input = debounce(input)
 
-</script>
-
 <template>
   <el-input placeholder="测试" v-model="inputStr" @input="new_input"/>
 </template>
