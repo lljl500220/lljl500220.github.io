@@ -8,8 +8,8 @@ export default defineUserConfig({
   locales: {
     "/": {
       lang: "zh-CN",
-      title: "水月洞天",
-      description: "琅嬛福地，水月洞天。",
+      title: "秦篆",
+      description: "",
     },
   },
 

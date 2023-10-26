@@ -41,7 +41,7 @@ export default hopeTheme({
       displayFooter: true,
 
       blog: {
-        description: "一个前端开发者",
+        description: "一个前端/node开发者",
         intro: "/intro.html",
       },
     },
