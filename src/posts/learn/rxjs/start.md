@@ -47,9 +47,20 @@ observable.subscribe({
 ### 流
 上文提到了一个被观察的对象，在被订阅后，会逐渐的推送出一个‘流’出来，那么流究竟是什么？  
 在计算机科学中，流被用于描述一组数据的连续传输和处理，可以看作是数据的有序序列，尽管它们在时间上不一定连续。在网络中，用于代指连续传输的数据包序列(它仍然是一个有序的，但是不一定在时间上连续的数据序列)，比如TCP。
-在代码中，比如java的io操作InputStream和node的FileStream，这些都是流的体现。  
+在代码中，比如java的io操作InputStream和node的FileStream，这些都是流的体现。
 在rxjs中，所有被观测的对象，都会将数据以流的形式推送给观察者或者说订阅者。所以这就是官网对rxjs定性的第二点-将异步事件作为集合处理。同时，rxjs的几乎所有操作符都与Array方法相似，这表明了，rxjs中的数据流动是一个有序序列。  
 接下来我们看一段代码
 ```typescript
-
+const observable = new Observable<number>(subscribe => {
+    subscribe.next(1)
+    subscribe.next(2)
+    subscribe.next(3)
+    setTimeout(() => {
+        subscribe.next(4)
+    }, 1000)
+})
+observable.subscribe({
+    next: (n) => console.log(n)
+})
+//1,2,3,1s...,4
 ```

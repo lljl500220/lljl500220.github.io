@@ -47,5 +47,12 @@ export const zhNavbar = navbar([
             "README.md",
             "electron.md"
         ],
-    },
+    },{
+        text: "闲谈",
+        icon: "/assets/icon/yun.svg",
+        prefix: "/posts/my/",
+        children: [
+            "README.md",
+        ],
+    }
 ]);

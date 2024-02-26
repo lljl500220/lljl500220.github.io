@@ -16,7 +16,7 @@ tag:
 
 <!-- more -->
 
-本网站是我blog的vue版本，使用vuepress构建，原hexo的版本目前正在维护中
+本网站是我blog的vue版本，使用vuepress构建，原 hexo的版本目前正在维护中
 
 网站从2022年7月10日距今已经运行了:<text style="color:blue">{{msg}}</text> :tada::tada::tada:
 
@@ -26,9 +26,7 @@ tag:
 
 网站所有的文章都会标注`引用`标签和`原创`标签，如感兴趣，均可自由引用，但请不要用于商业用途
 <script setup>
-import {ref} from "vue";
-const msg = ref(null);
-let ms=new Date()-new Date(2022,6,10);
-let day=Math.floor(ms/(24*3600*1000));
-msg.value=`${day}天`
+
+
+
 </script>
