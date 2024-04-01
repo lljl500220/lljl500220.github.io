@@ -30,12 +30,29 @@ export const zhNavbar = navbar([
             },
             {
                 text: "算法笔记",
-                icon: "code",
-                link: "/algorithm/",
+                icon: "note",
+                prefix: "/algorithm",
+                children:[
+                    {
+                        text: "力扣每日训练",
+                        icon: "code",
+                        link: "/LeetCode/",
+                    },
+                    {
+                        text: "修行",
+                        icon: "code",
+                        link: "/LearnAndUse/",
+                    }
+                ]
+            },
+            {
+                text: "设计模式",
+                icon: "note",
+                link: "/designPattern/",
             },
             {
                 text: "RXJS",
-                icon: "code",
+                icon: "note",
                 link: "/rxjs/",
             }
         ],
