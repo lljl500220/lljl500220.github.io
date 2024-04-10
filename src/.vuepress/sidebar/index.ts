@@ -6,6 +6,7 @@ export const zhSidebar = sidebar({
     ],
     "/posts/work/":"structure",
     "/posts/learn/note/":"structure",
+    "/posts/learn/vue/":"structure",
     "/posts/learn/simulation/":"structure",
     "/posts/learn/designPattern":"structure",
     // "/posts/learn/algorithm/":"structure",
