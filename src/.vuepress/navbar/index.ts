@@ -31,7 +31,7 @@ export const zhNavbar = navbar([
             {
                 text:'重生之我是vue老手',
                 icon:'vue',
-                link:'/vue'
+                link:'/vue/'
             },
             {
                 text: "算法笔记",
