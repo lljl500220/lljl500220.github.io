@@ -66,7 +66,8 @@ async function runParallel(maxConcurrency, source, iteratorFn) {
 ```
 这个方法主要是为了控制并发数与cpu核心数的关系，如果并发数大于cpu核心数，那么就需要控制并发数，这样可以避免cpu过载。  
 :::info node小知识
-这里使用了Promise.race方法，此方法返回一个 Promise，一旦迭代器中的某个 promise 解决或拒绝，返回的 promise 就会解决或拒绝。以下我给出几个例子  
+这里使用了Promise.race方法，此方法返回一个 Promise，一旦迭代器中的某个 promise 解决或拒绝，
+返回的 promise 就会解决或拒绝。以下我给出几个例子
 ```javascript
 const promise1 = new Promise((resolve, reject) => {
     setTimeout(resolve, 500, 'one');
@@ -81,6 +82,8 @@ Promise.race([promise1, promise2]).then((value) => {
     // 都会完成，但是promise2会先完成 同理的 reject也是一样，会先出发catch或者error
 });
 ```
+:::
+
 接下来实现build函数。
 ```javascript
 /**
@@ -144,17 +147,11 @@ Execa 是一个 Node.js 库，可以替代 Node.js 的原生 child_process 模�
 ### 依赖
 首先还是导入rollup需要的一些依赖
 ```javascript
-import esbuild from 'rollup-plugin-esbuild' //用于处理ts文件 在一些较老的版本中，使用的是rollup-plugin-typescript2处理ts文件
-import {nodeResolve} from '@rollup/plugin-node-resolve' //用于处理第三方模块
- import commonjs from '@rollup/plugin-commonjs' //用于处理commonjs模块
-import json from '@rollup/plugin-json' //用于处理json文件
-import {dts} from 'rollup-plugin-dts' //用于生成d.ts文件
-import terser from '@rollup/plugin-terser' //用于压缩代码
-import polyfillNode from 'rollup-plugin-polyfill-node' //用于处理nodejs内置模块
-import { fileURLToPath } from 'node:url' //用于处理文件路径
-import { createRequire } from 'node:module' //用于创建require函数
-import assert from 'node:assert/strict'
+import {fileURLToPath} from 'node:url' //用于处理文件路径
+import {createRequire} from 'node:module' //用于创建require函数
 import path from "node:path";
+import json from "@rollup/plugin-json"; //用于处理文件路径
+import esbuild from 'rollup-plugin-esbuild' //用于处理文件路径
 
 ```
 导入上诉后的内容后，开始编写内容
@@ -178,37 +175,15 @@ const pkg = require(`${packageDir}/package.json`) //获取目标包的package.js
 const packageOptions = pkg.buildOptions || {} //获取目标包的构建选项
 const name = packageOptions.filename || path.basename(packageDir) //获取目标包的名称
 
-
 /** @type {Record<PackageFormat, OutputOptions>} */
-const outputConfigs = { //
+const outputConfigs = {
     'esm-bundler': {
         file: resolve(`dist/${name}.esm-bundler.js`),  //esm-bundler适用于 bundlers（例如 webpack、Rollup）的 ES module 包
         format: 'es',
     },
-    'esm-browser': {
-        file: resolve(`dist/${name}.esm-browser.js`), //浏览器环境下的esm格式
-        format: 'es',
-    },
-    cjs: {
+    'cjs': {
         file: resolve(`dist/${name}.cjs.js`), // commonjs格式
         format: 'cjs',
-    },
-    global: {
-        file: resolve(`dist/${name}.global.js`), //浏览器环境下的全局变量格式
-        format: 'iife',
-    },
-    //仅用于主要的“vue”包 包含了模板编译器 用于运行时
-    'esm-bundler-runtime': {
-        file: resolve(`dist/${name}.runtime.esm-bundler.js`), //bundler环境下的runtime格式
-        format: 'es',
-    },
-    'esm-browser-runtime': {
-        file: resolve(`dist/${name}.runtime.esm-browser.js`), //浏览器环境下的runtime格式
-        format: 'es',
-    },
-    'global-runtime': {
-        file: resolve(`dist/${name}.runtime.global.js`),
-        format: 'iife',
     },
 }
 ```
@@ -216,42 +191,54 @@ const outputConfigs = { //
 ```javascript
 /** @type {ReadonlyArray<PackageFormat>} */
 const defaultFormats = ['esm-bundler', 'cjs'] //默认的打包格式，包含commonjs以及esm
-/** @type {ReadonlyArray<PackageFormat>} */
-const inlineFormats = /** @type {any} */ ( //命令行参数中的打包格式
-    process.env.FORMATS && process.env.FORMATS.split(',')
-)
 
-/** @type {ReadonlyArray<PackageFormat>} */
-const packageFormats = inlineFormats || packageOptions.formats || defaultFormats //打包格式
-const packageConfigs = process.env.PROD_ONLY //是否只打包生产环境
-    ? []
-    : packageFormats.map(format => createConfig(format, outputConfigs[format]))
+//此处按照最新的vue打包配置来看，理应先判断是否有inlineFormats，如果有则使用inlineFormats，否则使用defaultFormats
+//打包格式
+//我们只关注生产模式，相当于只打生产包
+const packageConfigs = defaultFormats.map(format => createConfig(format, outputConfigs[format]))
 
-if (process.env.NODE_ENV === 'production') { //如果是生产环境
-    packageFormats.forEach(format => {
-        if (packageOptions.prod === false) {
-            return
-        }
-        if (format === 'cjs') { //生产环境下的commonjs格式
-            packageConfigs.push(createProductionConfig(format))
-        }
-        if (/^(global|esm-browser)(-runtime)?/.test(format)) { //生产环境下的浏览器环境下的全局变量格式
-            packageConfigs.push(createMinifiedConfig(format))
-        }
-    })
-}
 
 export default packageConfigs
 ```
 由于rollup一般是导出一个配置出去，所以上面的createConfig方法就是用来创建这个文件的。
 ```javascript
-/**
- *
- * @param {PackageFormat} format - 打包格式
- * @param {OutputOptions} output - 输出配置
- * @param {ReadonlyArray<import('rollup').Plugin>} plugins - 插件处理
- * @returns {import('rollup').RollupOptions} - 打包配置
- */
-
-
+function createConfig(format, output, plugins = []) {
+    //返回一个rollup配置对象
+    return {
+        input: resolve('src/index.ts'), //入口文件 我们简易实现，仅保留'src/index.ts'这种情况，事实上还有运行时等其他情况
+        output: output, //输出配置 其实就是outputConfigs[format] vue本身实现了相当多中格式输出，但是我们只保留了两种
+        plugins: [
+            json({
+                namedExports: false
+            }),
+            esbuild({ //处理ts文件
+                tsconfig: path.resolve(__dirname, 'tsconfig.json'),
+                sourceMap: output.sourcemap,
+                minify: false,
+                target: 'es2015',
+                define:{
+                    version: `"${masterVersion}"`
+                }
+            }),
+            ...plugins //其它有可能存在的插件
+        ]
+    }
+}
 ```
+
+这样一个简易的rollup配置文件就完成了，接下来我们就可以通过node执行build.js文件，来进行打包了。其实原代码也没有特别复杂，只是在基础打包上面区分了各种环境，处理了一些特殊的情况，这样就可以更好的适应vue3的打包需求了。
+
+## 执行打包
+在package.json中添加一个脚本
+```json
+"scripts": {
+    "build": "node scripts/build.js"
+}
+```
+然后执行
+```shell
+npm run build
+```
+就可以进行打包了。现在将会在每个模块的dist文件夹下生成对应的打包文件。比如shared模块下的dist文件夹下就会生成shared.esm-bundler.js和shared.cjs.js两个文件。
+
+如果需要将各种模块都集合为一个vue模块，则需要额外实现一个以vue为入口的打包文件，这个文件会引入各个模块，然后再进行打包。这个文件的实现和上面的文件类似，只是需要引入各个模块，然后再进行打包。
