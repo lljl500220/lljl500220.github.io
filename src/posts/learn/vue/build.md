@@ -1,6 +1,8 @@
 ---
 title: 编写构建脚本
 icon: edit
+prev: ./搭建环境.md
+next: ./proxy.md
 ---
 
 ## build.js
