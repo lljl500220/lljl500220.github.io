@@ -5,6 +5,7 @@ category: vue
 tags:
   - vue3
 prev: ./reactive.md
+next: ./watch.md
 ---
 
 上一篇文章呢，我们讲了一下vue3的响应式原理，这一篇呢，我们来讲一下vue3中的计算属性computed。
