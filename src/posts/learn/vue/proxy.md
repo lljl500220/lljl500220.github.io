@@ -11,6 +11,8 @@ prev: ./build.md
 ## Object.defineProperty
 在vue3出世后，总会遇到一个新的面试题:说一些vue2与vue3的区别。作为一个前端开发，最先想到的当然就是响应式的更改，
 
+<!-- more -->
+
 ### 基础原理
 在vue2中，我们通过Object.defineProperty来实现数据的响应式：
 ```javascript

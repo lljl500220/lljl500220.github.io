@@ -2,10 +2,11 @@
 title: watch与watchEffect
 icon: vue
 prev: ./computed.md
+next: ./diff.md
 ---
 
 今天我们一起来看一下watch与watchEffect的源码实现。
-<!--more-->
+<!-- more -->
 
 ## watch
 

@@ -16,7 +16,7 @@ tag:
 <!-- more -->
 
 ## 先来看一下效果图吧！
-![demo](/carefree/demo.png)
+![demo](/carefree/new-pe-demo.gif)
 
 [项目地址github](https://github.com/lljl500220/electron) 请前往此处预览和下载项目文件
 

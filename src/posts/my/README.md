@@ -1,6 +1,6 @@
 ---
 icon: book
-title: 有感而发的一些事
+title: 一些小事
 shortTitle: 闲谈
 article: false
 ---

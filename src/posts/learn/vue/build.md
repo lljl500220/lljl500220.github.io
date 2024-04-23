@@ -8,6 +8,8 @@ next: ./proxy.md
 ## build.js
 在packages文件夹同级新建一个scripts文件夹，添加一个build.js文件。我们将通过这个文件来读取模块文件，并构建输出。
 
+<!-- more -->
+
 ### 文件读取
 由于vue3的核心代码使用分包的形式，分别写在packages/reactivity、packages/runtime-core、packages/shared等文件夹下，我们需要将这些文件读取出来，然后合并到一个文件中。
 

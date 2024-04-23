@@ -13,5 +13,6 @@ export const zhSidebar = sidebar({
     "/posts/learn/algorithm/LearnAndUse":"structure",
     "/posts/learn/algorithm/LeetCode":"structure",
     "/posts/learn/rxjs/":"structure",
-    "/posts/carefree/":"structure"
+    "/posts/carefree/":"structure",
+    "/posts/my/":"structure"
 });
