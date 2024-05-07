@@ -2,8 +2,8 @@
 title: ES6的代理模式 Proxy
 icon: javascript
 category: javascript
-tags:
-  - javascript
+tag:
+- javascript
 next: ./响应式源码实现.md
 prev: ./build.md
 ---

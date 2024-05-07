@@ -12,7 +12,7 @@ article: false
 [小米2022秋招前端试题](xiaomi2022.md)
 
 ## 力扣算法笔记
-[贪心算法系列](../algorithm/贪心.md)
+[贪心算法系列](../algorithm/LearnAndUse/贪心.md)
 
 ## 牛客刷题笔记
 [化为机试刷题笔记](化为机试.md)  

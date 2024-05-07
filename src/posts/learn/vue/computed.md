@@ -2,8 +2,8 @@
 title: computed
 icon: vue
 category: vue
-tags:
-  - vue3
+tag:
+- vue3
 prev: ./reactive.md
 next: ./watch.md
 ---
