@@ -67,7 +67,8 @@ export const zhNavbar = navbar([
         prefix: "/posts/carefree/",
         children: [
             "README.md",
-            "electron.md"
+            "electron.md",
+            "python热力图.md"
         ],
     },{
         text: "闲谈",
