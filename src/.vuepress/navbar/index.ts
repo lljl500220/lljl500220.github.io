@@ -69,7 +69,6 @@ export const zhNavbar = navbar([
         children: [
             "README.md",
             "electron.md",
-            "python热力图.md"
         ],
     },{
         text: "闲谈",

@@ -2,6 +2,7 @@
 title: 小米2022秋招
 icon: edit
 date: 2022-11-1
+article: false
 isOriginal: true
 category: 前端基础
 tag:
