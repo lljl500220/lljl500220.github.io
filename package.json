@@ -17,6 +17,7 @@
     "vuepress-theme-hope": "2.0.0-beta.171"
   },
   "dependencies": {
+    "lottie-web": "^5.13.0",
     "update-browserslist-db": "^1.0.11"
   }
 }
