@@ -2,16 +2,21 @@
   <div class="resume-page">
     <div class="resume-container">
       <header class="resume-header">
-        <div class="header-left">
-          <h1>{{ profile.name }} <span class="position-tag">{{ profile.position }}</span></h1>
-          <div class="contact-info">
-            <span>{{ profile.email }}</span>
-            <span>{{ profile.phone }}</span>
-            <span>{{ profile.location }}</span>
+        <div class="header-content">
+          <div class="header-row-1">
+            <span class="name">{{ profile.name }}</span>
+            <span class="position">{{ profile.position }}</span>
+            <span class="location">{{ profile.location }}</span>
           </div>
-          <p class="education">{{ profile.school }}</p>
+          <div class="header-row-2">
+            <a :href="`mailto:${profile.email}`" class="contact-link">{{ profile.email }}</a>
+            <a :href="`tel:${profile.phone}`" class="contact-link">{{ profile.phone }}</a>
+            <span class="contact-link wechat" @click="copyWechat">
+              微信: {{ profile.wechat }}
+            </span>
+            <span>{{ profile.school }}</span>
+          </div>
         </div>
-        <div class="header-right"></div>
       </header>
 
       <section class="resume-section">
@@ -59,7 +64,7 @@
 
       <section class="resume-section">
         <div class="section-heading">
-          <h2>重点项目</h2>
+          <h2>主要项目</h2>
           <div class="section-progress">
             <div class="section-progress-leaf"></div>
             <div class="section-progress-track">
@@ -91,9 +96,17 @@
                 </h3>
               </div>
               <p class="subtitle">{{ project.description }}</p>
+              <div v-if="project.contribution" class="contribution">
+                <strong>主要贡献：</strong>{{ project.contribution }}
+              </div>
               <ul class="details">
                 <li v-for="(detail, i) in project.details" :key="i">{{ detail }}</li>
               </ul>
+              <div v-if="project.tags?.length" class="project-tags">
+                <span v-for="tag in project.tags" :key="tag" class="project-tag">
+                  {{ tag }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -120,6 +133,17 @@ const setTimelineLeafRef = (el: HTMLDivElement | null, index: number) => {
 const setProjectLeafRef = (el: HTMLDivElement | null, index: number) => {
   if (!el) return;
   projectLeafRefs.value[index] = el;
+};
+
+const copyWechat = () => {
+  const wechat = profile.value.wechat;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(wechat).then(() => {
+      alert(`微信号已复制: ${wechat}`);
+    });
+  } else {
+    alert(`微信号: ${wechat}`);
+  }
 };
 
 onMounted(async () => {
@@ -188,6 +212,7 @@ const profile = ref({
   position: "前端开发",
   email: "1723377108@qq.com",
   phone: "18755192440",
+  wechat: "qinzhuan",
   location: "武汉",
   school: "合肥工业大学 · 软件工程 (2021)",
 });
@@ -213,7 +238,7 @@ const experience = ref([
       "构建了思特奇贵阳研发中心前端组件库，构建了项目init脚手架，实现了统一风格项目的快速初始化。",
       "参与项目开发，负责了黔云通，贵人家园，全省统一石化平台等项目的落地",
     ],
-    tags: ["前端工程化", "组件库 / 脚手架", "团队培养", "从0到1项目落地","vue2,vue3,pwa,electron"],
+    tags: ["前端工程化", "组件库 / 脚手架", "团队培养", "从0到1项目落地"],
   },
   {
     company: "集度汽车(外包)",
@@ -225,7 +250,7 @@ const experience = ref([
       "从0开始参与了集度的ai agent平台开发，使用的是dify的方案，落地了集度汽车app、小程序的智能售前客服能力；实现了内部的智能直播切片平台，实现了知识库系统等ai应用。",
       "其他商业化中台的业务开发：保险业务，置换二手车业务等"
     ],
-    tags: ["ai agent", "ai应用", "微前端", "埋点,sentry监控","vue3"],
+    tags: ["ai agent", "ai应用", "微前端", "埋点,sentry监控"],
   },
   {
     company: "泰康集团/泰康在线(外包)",
@@ -235,7 +260,7 @@ const experience = ref([
       "泰康在线，风控合规项目组，合规项目群开发，风控项目群开发，审计稽核项目群开发",
       "完成风控合规，审计项目之外，作为支援参与了其他项目组的攻坚工作。董办的股权结构图需求，风险管理中台的地图需求"
     ],
-    tags: ["canvas konva.js","vue3,nuxt3,nodejs","大屏地图",'超大量dom渲染的优化'],
+    tags: ["canvas konva.js","大屏地图",'超大量dom渲染的优化'],
   },
   {
     company: "武汉智玺科技-团队",
@@ -245,7 +270,7 @@ const experience = ref([
       "前端开发，完成了北京耐特瑞公司的一个医疗平台，包括门诊后台，人员管理平台，患者小程序，医生使用app等项目。",
       "在建的香港从化马会票务项目，taro框架下的大型小程序集合项目，主要包含了票务，游戏，咨询等业务模块。实现了大型配置动画的播放和控制能力，实现了简单的小游戏程序，蓝牙设备交互"
     ],
-    tags: ["动画控制器","taro,flutter,vue3","lottie,animation","微信小游戏","蓝牙设备交互"],
+    tags: ["动画控制器","taro","lottie,animation","微信小游戏","蓝牙设备交互"],
   },
 ]);
 
@@ -253,33 +278,60 @@ const projects = ref([
   {
     name: "黔云通系列项目",
     date: "2021.01-2024.05",
-    description: "思特奇在贵州落地的政企合作文旅项目，在职期间，该平台发展到四川承德，云南昆明等地落地，年流水统计超3亿元。",
-    link: "https://www.lbymt.com/config/home/home?sysFlag=qn", // 可选：项目链接，留空则不显示链接
+    description: "思特奇在贵州落地的政企合作文旅项目，在职期间，该平台发展到四川承德，云南昆明等地落地。",
+    link: "https://www.lbymt.com/config/home/home?sysFlag=qn",
+    contribution: "协调人力，项目管理，提供技术方案，参与开发，对外实施落地。",
+    tags: ["Vue3", "qiankun微前端", "Electron","JavaEE后端","uniapp","微信小程序","硬件交互"],
     details: [
-      "主要贡献：协调人力，项目管理，提供技术方案，参与开发，对外实施落地。",
       "重构了前身数旅通项目，从java迁移到以vue3为核心的前后端分离开发模式。对之后的项目提供了脚手架，组件库等基础设施。",
       "进行了以数旅通为中心的微前端结构设计，实现了其他项目后续管理平台的快速落地。",
       "开发景区酒店企业端的electron版本，实现了售票机，打印机的硬件交互。景区验票闸机的app，实现人脸识别等交互。" 
     ],
   },
   {
+    name:'贵人家园项目',
+    date: '2021.01-2024.05',
+    description: '黔南州推广的一个人社服务app，主要面向政企服务，提供社保，公积金，就业，人才，扶贫等服务',
+    link: 'https://baike.baidu.com/item/%E8%B4%B5%E4%BA%BA%E5%AE%B6%E5%9B%AD/63608256',
+    tags: ["Vue3", "uniapp","对话聊天应用","微信小程序"],
+    contribution: '技术选型，app开发，小程序开发，管理后台开发',
+    details: [
+      '使用uniapp的方案，实现了贵人家园的app，小程序一体的开发',
+      '协调多个外部平台，如公积金，灵活用工，本地招聘等服务接入',
+    ],
+  },
+  {
+    name:'省石油一体化平台',
+    date: '2021.01-2024.05',
+    description: '云码通和省交通厅和商务厅合作的项目，用于安全排查，税务监管，在职期间，该平台已覆盖全省5000+加油站',
+    link: 'http://swt.guizhou.gov.cn/xwzx/swyw/202412/t20241206_86309267.html',
+    tags: ["Vue3", "视频传输","echarts"],
+    contribution: '技术选型，平台开发',
+    details: [
+      '使用vue3+ts+element+echarts的组合开发了该平台',
+      '接入了视频实时传输的功能，'
+    ],
+  },
+  {
     name: "监控平台建设",
     date: "2024.05-2024.12",
     description: "集度汽车商业化中台前端sentry监控平台的建设",
+    tags: ["Sentry","nodejs"],
+    contribution: '参与sentry平台的本地化搭建，实现监控告警在飞书的通知，实现告警统计',
     details: [
-      "主要贡献：参与了集度汽车商业化中台前端sentry监控平台的建设，实现了整个商业化中台前端的错误监控和告警",
-      "参与sentry平台的本地化搭建，实现监控告警在飞书的通知，实现告警统计",
-    
+      '每周根据告警数据，调整告警规则，优化告警策略，优化告警通知方式',
+      '定期组织sentry问题分析，与团队成员一同解决平台监控发现的问题'
     ],
   },
-    {
-    name: "企业管理系统",
-    date: "2023.03",
-    description: "面向中小企业的一站式管理平台",
+  {
+    name:'ai agent平台建设',
+    date: '2024.05-2024.12',
+    description: '集度汽车商业化中台前端ai agent平台的建设',
+    tags:['react','nodejs','h5'],
+    contribution: '平台的搭建，实现生成式ai的应用落地，直播切片、知识库检索等agent工具的开发',
     details: [
-      "使用 Vue3 + Element Plus 构建，支持权限管理、数据可视化等功能",
-      "采用微前端架构，支持模块化开发和独立部署",
-      "优化首屏加载速度，Lighthouse 性能评分达到 95+",
+      '集度售前智能开发，应用于集度app，小程序',
+      '集度智能直播切片平台开发，应用于集度后端知识库系统',
     ],
   },
 ]);
@@ -306,54 +358,69 @@ const projects = ref([
 .resume-header {
   background: linear-gradient(135deg, #81e6d9 0%, #bee3f8 40%, #edf2f7 100%);
   color: #234e52;
-  padding: 16px 20px;
+  padding: 20px 30px;
+}
+
+.header-content {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.resume-header h1 {
-  margin: 0 0 8px 0;
-  font-size: 2.2em;
-  font-weight: 700;
-  color: #234e52;
-  border: none;
-}
-
-.position-tag {
-  font-size: 0.6em;
-  font-weight: 400;
-  opacity: 0.85;
-}
-
-.header-left {
-  max-width: 60%;
-}
-
-.header-right {
-  flex: 1;
-}
-
-.contact-info {
+.header-row-1 {
   display: flex;
-  justify-content: center;
-  justify-content: flex-start;
+  align-items: baseline;
   gap: 16px;
-  margin-bottom: 4px;
   flex-wrap: wrap;
 }
 
-.contact-info span {
-  font-size: 0.9em;
-  opacity: 0.9;
-  color: #2d3748;
+.header-row-1 .name {
+  font-size: 2.2em;
+  font-weight: 700;
+  color: #234e52;
 }
 
-.education {
-  margin: 4px 0 0 0;
-  font-size: 0.9em;
-  opacity: 0.9;
+.header-row-1 .position,
+.header-row-1 .location {
+  font-size: 1.1em;
+  font-weight: 500;
   color: #2d3748;
+  opacity: 0.9;
+}
+
+.header-row-2 {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.header-row-2 span {
+  font-size: 0.95em;
+  color: #2d3748;
+  opacity: 0.85;
+}
+
+.contact-link {
+  font-size: 0.95em;
+  color: #2d3748;
+  opacity: 0.85;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.contact-link:hover {
+  color: #2c7a7b;
+  opacity: 1;
+}
+
+.contact-link.wechat {
+  border-bottom: 1px dashed rgba(44, 122, 123, 0.3);
+}
+
+.contact-link.wechat:hover {
+  border-bottom-color: #2c7a7b;
 }
 
 .resume-section {
@@ -474,6 +541,38 @@ const projects = ref([
   color: #666;
   margin: 5px 0 15px 0;
   font-size: 1em;
+}
+
+.contribution {
+  padding: 10px 14px;
+  margin: 10px 0 12px 0;
+  background: linear-gradient(135deg, rgba(129, 230, 217, 0.12) 0%, rgba(198, 246, 213, 0.08) 100%);
+  border-left: 3px solid #2c7a7b;
+  border-radius: 4px;
+  color: #2d3748;
+  line-height: 1.6;
+  font-size: 0.95em;
+}
+
+.contribution strong {
+  color: #2c7a7b;
+  font-weight: 600;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.project-tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.8em;
+  background: rgba(129, 230, 217, 0.18);
+  color: #276749;
+  border: 1px solid rgba(129, 230, 217, 0.4);
 }
 
 .details {
@@ -663,20 +762,51 @@ const projects = ref([
   }
 
   .resume-header {
-    padding: 40px 20px;
+    padding: 20px 12px;
   }
 
-  .resume-header h1 {
-    font-size: 2em;
+  .header-row-1 .name {
+    font-size: 1.8em;
+  }
+
+  .header-row-1 .position,
+  .header-row-1 .location {
+    font-size: 1em;
   }
 
   .resume-section {
-    padding: 30px 20px;
+    padding: 0px 12px;
   }
 
-  .contact-info {
+  .header-row-2 {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  /* 移动端隐藏叶子 */
+  .timeline-left,
+  .section-progress-leaf {
+    display: none !important;
+  }
+
+  /* 移动端隐藏对话框突出 */
+  .timeline-content::before,
+  .timeline-content::after {
+    display: none !important;
+  }
+
+  /* 调整时间线布局 */
+  .timeline-item {
+    display: block;
+  }
+
+  .timeline {
+    padding-left: 0;
+  }
+
+  .project-list {
+    padding-left: 0;
   }
 }
 </style>
