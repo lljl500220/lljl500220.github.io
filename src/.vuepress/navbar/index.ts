@@ -77,5 +77,9 @@ export const zhNavbar = navbar([
         children: [
             "README.md",
         ],
+    },{
+        text: "在线简历",
+        icon: "user",
+        link: "/resume.html",
     }
 ]);
