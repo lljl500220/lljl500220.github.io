@@ -1,1 +1,0 @@
-import{_ as e,O as t,P as n,a3 as o,Q as c}from"./framework-ddc72b3a.js";const a={},r=c("p",null,"游戏和其它娱乐项目。",-1);function s(_,l){return t(),n("div",null,[r,o(" more ")])}const m=e(a,[["render",s],["__file","index.html.vue"]]);export{m as default};
