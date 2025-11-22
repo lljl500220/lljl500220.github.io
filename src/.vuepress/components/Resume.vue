@@ -1,5 +1,6 @@
 <template>
   <div class="resume-page">
+    <button class="export-pdf-btn" @click="exportToPDF">导出PDF</button>
     <div class="resume-container">
       <header class="resume-header">
         <div class="header-content">
@@ -146,6 +147,10 @@ const copyWechat = () => {
   }
 };
 
+const exportToPDF = () => {
+  window.print();
+};
+
 onMounted(async () => {
   // 顶部两个装饰条右侧的叶子
   const sectionLeafNodes = document.querySelectorAll<HTMLDivElement>(".section-progress-leaf");
@@ -258,7 +263,8 @@ const experience = ref([
     date: "2025.04 - 至今",
     details: [
       "泰康在线，风控合规项目组，合规项目群开发，风控项目群开发，审计稽核项目群开发",
-      "完成风控合规，审计项目之外，作为支援参与了其他项目组的攻坚工作。董办的股权结构图需求，风险管理中台的地图需求"
+      "完成风控合规，审计项目之外，作为支援参与了其他项目组的攻坚工作。董办的股权结构图需求，风险管理中台的地图需求",
+      "在风控合规组进行ai编码讲解，带领其他前端转型ai开发"
     ],
     tags: ["canvas konva.js","大屏地图",'超大量dom渲染的优化'],
   },
@@ -334,6 +340,31 @@ const projects = ref([
       '集度智能直播切片平台开发，应用于集度后端知识库系统',
     ],
   },
+  {
+    name:'泰康稽核中心新首页',
+    date: '2025.03-至今',
+    description: '泰康稽核中心首页翻新和其他风控合规项目',
+    tags:['nuxt3','canvas','konva.js','echarts','dom渲染优化'],
+    contribution: '首页开发，旧系统迁移，技术埋点实现',
+    details: [
+      '使用nuxt3实现了ssr的稽核首页，提升从泰康门户访问稽核中心的体验',
+      '使用canvas实现了一个高度定制的类甘特图效果',
+      '大量dom元素的渲染优化，提升页面加载速度',
+      '其他风控合规项目，风清气正平台，以及多个ai问答应用'
+    ],
+  },
+  {
+    name:'香港从化马会票务项目',
+    date: '2025.01-至今',
+    description: '香港从化马会票务项目，主要负责小程序和小游戏部分，一部分的后端开发',
+    tags:['taro','nodejs','canvas','lottie,animation','微信小游戏','蓝牙设备交互'],
+    contribution: '票务项目开发，小程序开发，管理后台开发',
+    details: [
+      '使用taro实现了香港从化马会票务项目',
+      '开发了一个动画控制器，能够实现多个复杂动画的组合播放',
+      '开发了一个简易小游戏，在实地场景中，根据用户的地理信息，进行游戏交互',
+    ],
+  },
 ]);
 </script>
 
@@ -342,10 +373,38 @@ const projects = ref([
   min-height: 100vh;
   background: linear-gradient(135deg, #e6fffa 0%, #edf2f7 40%, #f7fafc 100%);
   padding: 40px 20px;
+  position: relative;
+}
+
+.export-pdf-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #2c7a7b 0%, #38b2ac 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(44, 122, 123, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.export-pdf-btn:hover {
+  background: linear-gradient(135deg, #38b2ac 0%, #4fd1c5 100%);
+  box-shadow: 0 6px 16px rgba(44, 122, 123, 0.4);
+  transform: translateY(-2px);
+}
+
+.export-pdf-btn:active {
+  transform: translateY(0);
 }
 
 .resume-container {
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
   background: white;
   border-radius: 16px;
@@ -797,6 +856,53 @@ const projects = ref([
   }
 
   /* 调整时间线布局 */
+  .timeline-item {
+    display: block;
+  }
+
+  .timeline {
+    padding-left: 0;
+  }
+
+  .project-list {
+    padding-left: 0;
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .export-pdf-btn {
+    display: none !important;
+  }
+
+  .resume-page {
+    background: white;
+    padding: 0;
+  }
+
+  .resume-container {
+    max-width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  /* 打印时隐藏叶子动画 */
+  .timeline-dot,
+  .section-progress-leaf {
+    display: none !important;
+  }
+
+  /* 打印时隐藏对话框突出 */
+  .timeline-content::before,
+  .timeline-content::after {
+    display: none !important;
+  }
+
+  /* 调整时间线布局 */
+  .timeline-left {
+    display: none !important;
+  }
+
   .timeline-item {
     display: block;
   }

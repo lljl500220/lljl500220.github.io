@@ -79,7 +79,7 @@ export const zhNavbar = navbar([
         ],
     },{
         text: "在线简历",
-        icon: "user",
-        link: "/resume.html",
+        icon: "/assets/icon/yun.svg",
+        link: "/resume",
     }
 ]);
