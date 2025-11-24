@@ -71,13 +71,6 @@ export const zhNavbar = navbar([
             "electron.md",
         ],
     },{
-        text: "闲谈",
-        icon: "/assets/icon/yun.svg",
-        prefix: "/posts/my/",
-        children: [
-            "README.md",
-        ],
-    },{
         text: "在线简历",
         icon: "/assets/icon/yun.svg",
         link: "/resume",
