@@ -1057,12 +1057,133 @@ const projects = ref([
     border-radius: 0;
   }
 
-  .skills-intro-section {
-    background: white;
-    page-break-inside: avoid;
+  /* 压缩头部区域 */
+  .resume-header {
+    padding: 12px 30px !important;
   }
 
-  /* 打印时隐藏叶子动画 */
+  .header-content {
+    gap: 6px !important;
+  }
+
+  /* 保持头部布局 */
+  .header-row-1 {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .header-row-1 .name {
+    font-size: 1.8em !important;
+  }
+
+  .header-row-1 .position,
+  .header-row-1 .location {
+    font-size: 1em !important;
+  }
+
+  .header-row-2 {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .header-row-2 span,
+  .contact-link {
+    font-size: 0.85em !important;
+  }
+
+  /* 保持技能区域布局 - 压缩空间 */
+  .skills-intro-section {
+    background: white !important;
+    padding: 16px 40px !important;
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .skills-area {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px 12px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .skill-item {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+
+  .skill-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    font-size: 0.85em !important;
+  }
+
+  /* 保持技能条显示 - 缩小高度 */
+  .skill-bar {
+    display: block !important;
+    height: 4px !important;
+    background: rgba(226, 232, 240, 0.5) !important;
+    border-radius: 999px !important;
+    overflow: hidden !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .skill-fill {
+    display: block !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, #81e6d9 0%, #2c7a7b 100%) !important;
+    border-radius: 999px !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* 保持其他技能标签 - 压缩空间 */
+  .other-skills-area {
+    display: flex !important;
+    gap: 8px !important;
+    margin-top: 12px !important;
+    padding-top: 12px !important;
+  }
+
+  .other-skills-label {
+    font-size: 0.85em !important;
+  }
+
+  .other-skills-tags {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px 6px !important;
+  }
+
+  .other-skill-tag {
+    display: inline-block !important;
+    padding: 2px 8px !important;
+    font-size: 0.75em !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* 压缩自我介绍 */
+  .intro-area {
+    padding-top: 12px !important;
+    margin-top: 12px !important;
+  }
+
+  .intro-text {
+    font-size: 0.85em !important;
+    line-height: 1.6 !important;
+  }
+
+  /* 打印时隐藏动画进度条和叶子 */
+  .section-progress,
   .timeline-dot,
   .section-progress-leaf {
     display: none !important;
@@ -1089,6 +1210,85 @@ const projects = ref([
 
   .project-list {
     padding-left: 0;
+  }
+
+  /* 压缩section间距 */
+  .resume-section {
+    padding: 0 20px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .section-heading {
+    margin-bottom: 8px !important;
+  }
+
+  .section-heading h2 {
+    font-size: 1.4em !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* 压缩时间线 */
+  .timeline-item {
+    margin-bottom: 12px !important;
+  }
+
+  .timeline-content {
+    padding: 6px 12px 12px !important;
+  }
+
+  .timeline-header {
+    margin-bottom: 4px !important;
+  }
+
+  .timeline-date {
+    font-size: 0.8em !important;
+  }
+
+  .timeline-title {
+    font-size: 1em !important;
+  }
+
+  .subtitle {
+    font-size: 0.9em !important;
+    margin: 3px 0 8px 0 !important;
+  }
+
+  .contribution {
+    padding: 6px 10px !important;
+    margin: 6px 0 8px 0 !important;
+    font-size: 0.85em !important;
+  }
+
+  .details {
+    font-size: 0.9em !important;
+  }
+
+  .details li {
+    margin-bottom: 4px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* 保持标签颜色 */
+  .exp-tag,
+  .project-tag {
+    padding: 1px 6px !important;
+    font-size: 0.7em !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .exp-tags,
+  .project-tags {
+    margin-top: 6px !important;
+    gap: 4px !important;
+  }
+
+  /* 保持背景色 */
+  .resume-header,
+  .timeline-content,
+  .contribution {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }
 </style>
