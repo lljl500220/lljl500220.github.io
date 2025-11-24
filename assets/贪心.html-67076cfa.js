@@ -1,0 +1,1 @@
+import{a0 as e,O as t,P as _,Q as c}from"./framework-d6e74f8b.js";const o={},s=c("p",null,"碎碎念：石化项目又开始忙了，这些天刷的题都没时间记录，今天得空，记一下吧。",-1),n=[s];function a(r,l){return t(),_("div",null,n)}const f=e(o,[["render",a],["__file","贪心.html.vue"]]);export{f as default};
