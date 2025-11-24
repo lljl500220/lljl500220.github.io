@@ -58,14 +58,14 @@
         </div>
         <div class="timeline">
           <div
-            v-for="(exp, index) in experience"
-            :key="index"
-            class="timeline-item"
+              v-for="(exp, index) in experience"
+              :key="index"
+              class="timeline-item"
           >
             <div class="timeline-left">
               <div
-                class="timeline-dot"
-                :ref="el => setTimelineLeafRef(el as HTMLDivElement | null, index)"
+                  class="timeline-dot"
+                  :ref="el => setTimelineLeafRef(el as HTMLDivElement | null, index)"
               ></div>
               <div class="timeline-line" v-if="index !== experience.length - 1"></div>
             </div>
@@ -101,14 +101,14 @@
         </div>
         <div class="project-list">
           <div
-            v-for="(project, index) in projects"
-            :key="index"
-            class="timeline-item project-item"
+              v-for="(project, index) in projects"
+              :key="index"
+              class="timeline-item project-item"
           >
             <div class="timeline-left">
               <div
-                class="timeline-dot project-dot"
-                :ref="el => setProjectLeafRef(el as HTMLDivElement | null, index)"
+                  class="timeline-dot project-dot"
+                  :ref="el => setProjectLeafRef(el as HTMLDivElement | null, index)"
               ></div>
               <div class="timeline-line" v-if="index !== projects.length - 1"></div>
             </div>
@@ -136,49 +136,6 @@
         </div>
       </section>
 
-      <section class="resume-section">
-        <div class="section-heading">
-          <h2>亮点项目</h2>
-          <div class="section-progress">
-            <div class="section-progress-leaf"></div>
-            <div class="section-progress-track">
-              <div class="section-progress-fill"></div>
-            </div>
-          </div>
-        </div>
-        <div class="project-list">
-          <div
-            v-for="(project, index) in academicProjects"
-            :key="index"
-            class="timeline-item project-item"
-          >
-            <div class="timeline-left">
-              <div
-                class="timeline-dot project-dot"
-                :ref="el => setProjectLeafRef(el as HTMLDivElement | null, projects.length + index)"
-              ></div>
-              <div class="timeline-line" v-if="index !== academicProjects.length - 1"></div>
-            </div>
-            <div class="timeline-content project-card">
-              <div class="timeline-header">
-                <span class="timeline-date">{{ project.date }}</span>
-                <h3 class="timeline-title">
-                  {{ project.name }}
-                </h3>
-              </div>
-              <p class="subtitle">{{ project.description }}</p>
-              <ul class="details">
-                <li v-for="(detail, i) in project.details" :key="i">{{ detail }}</li>
-              </ul>
-              <div v-if="project.tags?.length" class="project-tags">
-                <span v-for="tag in project.tags" :key="tag" class="project-tag">
-                  {{ tag }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   </div>
 </template>
@@ -290,18 +247,18 @@ const profile = ref({
 });
 
 const skills = ref([
-  { name: "Vue.js", level: "精通", percentage: "95%" },
-  { name: "React", level: "熟练", percentage: "80%" },
-  { name: "TypeScript / JavaScript", level: "精通", percentage: "90%" },
-  { name: "小程序 / Taro / Uniapp", level: "熟练", percentage: "85%" },
+  { name: "Vue.js", level: "精通", percentage: "90%" },
+  { name: "React", level: "熟练", percentage: "75%" },
+  { name: "TypeScript / JavaScript", level: "精通", percentage: "85%" },
+  { name: "小程序 / Taro / Uniapp", level: "熟练", percentage: "80%" },
 ]);
 
 const otherSkills = ref([
-  'Python','Node.js','Canvas','Echarts','Vite','微前端','Electron','Scss/Less','埋点 Sentry','AI辅助开发'
+  'Node.js','Python','Canvas','Electron','Echarts','Vite','Scss/Less','埋点 Sentry','微前端','AI辅助开发'
 ]);
 
 const introduction = ref(
-  "4年前端开发经验，带领过10人前端团队，注重前端标准化，负责过多个省级项目落地。擅长Vue和React技术栈，有全栈能力。在不同公司都负责或参与搭建组件库、脚手架和微前端架构。做过AI Agent平台和监控平台，有性能优化和Canvas、SVG动画经验，曾参与过计算机生物信息相关研究，使用Python和R语言开发AI模型应用。具备跨领域学习和技术整合能力。"
+    "4年前端工程师，带过10人团队，负责过多个省级项目落地，技术栈覆盖Vue/React/Node.js/AI，擅长从0到1落地项目。"
 );
 
 const customText = ref("");
@@ -312,10 +269,10 @@ const experience = ref([
     position: "全栈工程师",
     date: "2024.12 - 至今",
     details: [
-      "负责医疗平台和票务小程序的全栈开发，使用Vue3、Node.js、Taro等技术栈",
-      "开发爱丁医生平台（门诊后台、管理端、小程序、APP），3个月完成从0到1上线",
-      "开发从化马会票务小程序，实现动画控制器、LBS游戏、蓝牙交互等复杂功能",
-      "使用Cursor AI工具提升开发效率；同时协助配偶进行生物信息学研究"
+      "独立负责医疗平台和票务小程序的全栈开发（Vue3/Node.js/Taro）",
+      "3个月完成爱丁医生平台四端开发（门诊/管理/小程序/APP），现已上线",
+      "开发从化马会票务小程序，实现毫秒级动画控制、LBS+蓝牙交互等技术难点",
+      "使用Cursor AI工具显著提升开发效率；协助生物信息学AI应用开发"
     ],
     tags: ["全栈开发", "医疗平台", "小程序开发", "AI编程"],
   },
@@ -324,10 +281,10 @@ const experience = ref([
     position: "前端工程师",
     date: "2024.05 - 2024.12",
     details: [
-      "负责AI Agent平台和Sentry监控系统从0到1建设，参与微前端架构优化",
-      "基于Dify搭建智能客服，落地到集度APP和小程序，用户好评率87%",
-      "搭建Sentry监控平台，覆盖20+微前端应用，接入飞书告警，提升问题发现效率",
-      "开发智能直播切片工具，每周自动生成100+条营销素材"
+      "从0到1搭建AI Agent平台和Sentry监控系统，优化微前端架构",
+      "基于Dify搭建智能客服（RAG+多模型），落地APP/小程序，好评率87%",
+      "搭建Sentry监控平台覆盖20+应用，接入飞书告警，大幅提升问题发现效率",
+      "开发AI直播切片工具，每周自动生成100+营销素材"
     ],
     tags: ["AI应用", "监控建设", "从0到1"],
   },
@@ -336,10 +293,10 @@ const experience = ref([
     position: "前端负责人",
     date: "2021.01 - 2024.05",
     details: [
-      "带领10人前端团队，负责技术规划和团队管理，主导多个省级项目落地，服务用户100万+",
-      "从0搭建前端工程化体系：组件库、CLI脚手架、微前端架构",
-      "实现qiankun微前端架构，整合贵阳和成都多个子项目，支持多团队独立开发",
-      "培养9名前端新人，主导技术栈从JavaWeb+Vue2升级到Vue3"
+      "带领10人团队负责技术规划，主导多个省级项目落地（服务100万+用户）",
+      "从0搭建前端工程化体系（组件库/CLI脚手架/qiankun微前端架构）",
+      "整合贵阳/成都多个子项目为微前端架构，支持3个团队并行开发",
+      "培养9名前端新人，主导技术栈升级（JavaWeb+Vue2 → Vue3全家桶）"
     ],
     tags: ["团队管理", "工程化建设", "技术导师"],
   },
@@ -358,13 +315,13 @@ const projects = ref([
   {
     name: "黔云通文旅平台系列",
     date: "2021.01-2024.05",
-    description: "贵州省级文旅平台，覆盖20+景区，推广至云南、四川等地",
+    description: "贵州省级文旅平台（覆盖20+景区，推广至云南/四川）",
     contribution: "技术负责人",
     tags: ["qiankun微前端", "Electron", "硬件交互"],
     details: [
-      "重构Java单体为Vue3前后端分离，开发组件库和脚手架",
-      "用qiankun实现微前端，整合成都和贵阳多个子项目",
-      "开发Electron桌面端，对接售票机、打印机、闸机等硬件"
+      "重构Java单体为Vue3前后端分离，搭建组件库和CLI脚手架",
+      "实现qiankun微前端架构，整合成都/贵阳多个子项目，支持多团队协作",
+      "开发Electron桌面端，对接售票机/打印机/闸机等硬件设备"
     ],
   },
   {
@@ -394,45 +351,42 @@ const projects = ref([
     date: "2024.05-2024.12",
     description: "基于Dify的AI智能客服和内容生产工具",
     tags: ["Dify", "RAG", "AI Agent", "智能切片"],
-    contribution: '负责从0到1搭建',
+    contribution: '',
     details: [
-      '搭建AI智能客服，落地到集度APP和小程序，好评率87%',
-      '开发智能直播切片工具，每周自动生成100+条营销素材'
+      '基于Dify搭建RAG智能客服，接入APP/小程序，好评率87%',
+      '开发AI直播切片工具（自动识别+剪辑），每周生成100+营销素材'
     ],
   },
   {
     name: '从化马会票务小程序',
     date: '2024.12-至今',
-    description: '香港从化马会的大型票务小程序',
+    description: '香港从化马会大型票务小程序',
     tags: ['Taro', 'Lottie', 'LBS小游戏', '蓝牙交互'],
-    contribution: '负责架构设计和开发',
+    contribution: '负责架构设计和全栈开发',
     details: [
-      '实现复杂动画控制系统，支持CSS和Lottie动画精准到毫秒的组合播放',
-      '开发LBS小游戏，结合GPS和蓝牙信标实现实时位置交互',
-      '使用NestJS开发后端服务，实现业务CRUD和通知推送'
+      '实现毫秒级动画控制系统（CSS+Lottie精准编排），支持复杂剧情式播放',
+      '开发LBS小游戏（GPS+蓝牙信标），实现实时位置交互和打卡功能',
+      '使用NestJS开发RESTful后端，实现业务CRUD和实时通知推送'
     ],
   },
   {
     name: '爱丁医生医疗平台',
     date: '2024.12-2025.03',
-    description: '医疗信息化平台，包含四端系统',
+    description: '医疗信息化平台（四端系统）',
     tags: ['全栈开发', 'AI辅助编程', '快速交付'],
-    contribution: '独立负责全栈开发',
+    contribution: '独立全栈开发',
     details: [
-      '独立完成门诊后台、管理平台、患者小程序、医生APP的开发',
-      '搭建Node.js后端，设计RESTful API和数据库',
-      '使用AI工具辅助开发，3个月完成从0到1上线'
+      '3个月独立完成四端开发（门诊后台/管理平台/患者小程序/医生APP）',
+      '搭建Node.js+MySQL后端架构，设计RESTful API和数据库模型',
+      '使用Cursor AI辅助开发，大幅提升代码生成效率，快速交付上线'
     ],
   },
-]);
-
-const academicProjects = ref([
   {
-    name: "基因组学AI应用开发",
+    name: "AI技术应用实践",
     date: "2024.12 - 2025.11",
-    description: "协助进行生物信息学有关的数据分析和AI模型应用开发",
-    tags: ["AlphaGenome", "DeepTSS", "生物信息学"],
-    contribution: "技术支持与应用开发",
+    description: "协助进行跨领域AI模型应用开发",
+    tags: ["Python", "AI模型", "数据分析"],
+    contribution: "技术支持",
     details: [
       "使用AlphaGenome模型进行DNA可及性、蛋白结合位点等预测",
       "使用DeepTSS模型进行转录起始位点预测",
@@ -650,10 +604,10 @@ const academicProjects = ref([
 }
 
 .other-skill-tag:hover {
-  background: rgba(129, 230, 217, 0.25);
-  border-color: rgba(129, 230, 217, 0.5);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(44, 122, 123, 0.1);
+  background: rgba(129, 230, 217, 0.3);
+  border-color: rgba(56, 178, 172, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(44, 122, 123, 0.15);
 }
 
 .intro-area {
@@ -905,10 +859,10 @@ const academicProjects = ref([
   width: 2px;
   margin-top: 6px;
   background: linear-gradient(
-    to bottom,
-    rgba(56, 178, 172, 0.9),
-    rgba(129, 230, 217, 0.4),
-    rgba(56, 178, 172, 0.05)
+      to bottom,
+      rgba(56, 178, 172, 0.9),
+      rgba(129, 230, 217, 0.4),
+      rgba(56, 178, 172, 0.05)
   );
 }
 
@@ -919,7 +873,7 @@ const academicProjects = ref([
   background: linear-gradient(135deg, #f7fafc 0%, #edfdfd 40%, #ffffff 100%);
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
   border: 1px solid rgba(203, 213, 224, 0.9);
-  transition: box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+  transition: all 0.3s ease;
   position: relative;
 }
 
@@ -951,9 +905,10 @@ const academicProjects = ref([
 }
 
 .timeline-item:hover .timeline-content {
-  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
-  border-color: rgba(56, 178, 172, 0.55);
-  background: linear-gradient(135deg, #edfdfd 0%, #ffffff 70%);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+  border-color: rgba(56, 178, 172, 0.7);
+  background: linear-gradient(135deg, #e6fffa 0%, #ffffff 70%);
+  transform: translateY(-2px);
 }
 
 .timeline-item:hover .timeline-content::before {
