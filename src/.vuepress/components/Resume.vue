@@ -138,7 +138,7 @@
 
       <section class="resume-section">
         <div class="section-heading">
-          <h2>学术项目</h2>
+          <h2>亮点项目</h2>
           <div class="section-progress">
             <div class="section-progress-leaf"></div>
             <div class="section-progress-track">
@@ -167,9 +167,6 @@
                 </h3>
               </div>
               <p class="subtitle">{{ project.description }}</p>
-              <div v-if="project.contribution" class="contribution">
-                <strong>主要贡献：</strong>{{ project.contribution }}
-              </div>
               <ul class="details">
                 <li v-for="(detail, i) in project.details" :key="i">{{ detail }}</li>
               </ul>
@@ -304,7 +301,7 @@ const otherSkills = ref([
 ]);
 
 const introduction = ref(
-  "4年前端开发经验，带领过10人前端团队，注重前端标准化，负责过多个省级项目落地。擅长Vue和React技术栈，有全栈能力。在不同公司都负责或参与搭建组件库、脚手架和微前端架构。做过AI Agent平台和监控平台，有性能优化和Canvas、SVG动画经验，25年在进行生物信息学研究，使用Python和R语言开发AI模型应用。具备跨领域学习和技术整合能力。"
+  "4年前端开发经验，带领过10人前端团队，注重前端标准化，负责过多个省级项目落地。擅长Vue和React技术栈，有全栈能力。在不同公司都负责或参与搭建组件库、脚手架和微前端架构。做过AI Agent平台和监控平台，有性能优化和Canvas、SVG动画经验，曾参与过计算机生物信息相关研究，使用Python和R语言开发AI模型应用。具备跨领域学习和技术整合能力。"
 );
 
 const customText = ref("");
@@ -433,7 +430,7 @@ const academicProjects = ref([
   {
     name: "基因组学AI应用开发",
     date: "2024.12 - 2025.11",
-    description: "协助配偶进行生物信息学研究",
+    description: "协助进行生物信息学有关的数据分析和AI模型应用开发",
     tags: ["AlphaGenome", "DeepTSS", "生物信息学"],
     contribution: "技术支持与应用开发",
     details: [
