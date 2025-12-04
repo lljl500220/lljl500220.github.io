@@ -5,7 +5,7 @@ icon: home
 title: 知客
 heroImage: /assets/logo.png
 bgImage: /blue_bg.jpeg
-heroText: 吾身也有涯，而知也无涯。
+heroText: 朽木虽微风未尽，暗蓄韬光待高升！
 heroFullScreen: true
 projects:
   - name: 黔云通
