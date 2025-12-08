@@ -14,5 +14,6 @@ export const zhSidebar = sidebar({
     "/posts/learn/algorithm/LeetCode":"structure",
     "/posts/learn/rxjs/":"structure",
     "/posts/carefree/":"structure",
-    "/posts/my/":"structure"
+    "/posts/my/":"structure",
+    "/posts/learn/vite/":"structure"
 });
