@@ -27,4 +27,19 @@ emmm，以上为真实场景，没有半点虚构，HMR，全名叫做Hot Module
 #### 模块依赖图
 上文说过，vite会维护一张模块之间的依赖图谱(Module Graph)，用于记录模块之间的引用关系，当某个模块变化后，顺着依赖图一直找，找到所有受影响的部分，就能实现精准的定位。
 
-#### 为什么修改ts文件会发生整页刷新的情况
+::: important hmr怎么处理文件变化？
+首先确定vite hmr查找文件的顺序：
+入口文件 main.ts -> App.vue(会产生边界) -> Xxx.vue(边界) -> xxx.tx(没有边界)
+ok，那边`边界`是什么？：
+边界 就是 ‘声明了 import.meta.hot.accept()’的模块。
+vue文件因为 @vitejs/plugin-vue 注入了accept代码
+tsx/jsx文件 @vitejs/plugin-react 注入了accept代码 
+普通ts文件，没有任何注入。
+:::
+
+当一处代码被改变时会发生什么呢？这里以vue为例，react其实也是同理：  
+比如 detail.vue 改变了任何代码，vite就会从它开始向依赖图谱查找，发现它本身就是存在边界的(实现了hot.accept())的，那么查找到自己就结束了，
+所以通知浏览器，更新detail.vue
+
+如果是一个 ts文件，比如 date.ts里面的方法被修改了，vite检测到变化，首先也会向上找，对于每一个导入它的分支路径，都向上查找到存在边界或者直通入口的位置结束。
+
