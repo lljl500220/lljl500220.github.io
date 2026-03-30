@@ -33,12 +33,38 @@ jobs:
         env:
           NODE_OPTIONS: --max_old_space_size=8192
         run: |-
-          npm run docs:build
+          npm run docs:build:github
           > src/.vuepress/dist/.nojekyll
 
-      - name: 部署文档
+      - name: 部署到 GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           # 这是文档部署到的分支名称
           branch: gh-deploy
           folder: src/.vuepress/dist
+
+      - name: 安装 rsync
+        run: sudo apt-get update && sudo apt-get install -y rsync
+
+      - name: 重新构建服务器版本
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: npm run docs:build:server
+
+      - name: 配置 SSH
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "$SERVER_HOST" >> ~/.ssh/known_hosts
+
+      - name: 同步到自有服务器
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PATH: ${{ secrets.SERVER_PATH }}
+        run: |
+          rsync -avz --delete src/.vuepress/dist/ "${SERVER_USER}@${SERVER_HOST}:${SERVER_PATH}/"

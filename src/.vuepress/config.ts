@@ -2,8 +2,10 @@ import { defineUserConfig } from "vuepress";
 import theme from "./theme.js";
 import {copyCodePlugin} from "vuepress-plugin-copy-code2";
 
+const siteBase = process.env.SITE_BASE ?? "/";
+
 export default defineUserConfig({
-  base: "/",
+  base: siteBase,
 
   locales: {
     "/": {

@@ -2,8 +2,10 @@ import { hopeTheme } from "vuepress-theme-hope";
 import { zhNavbar } from "./navbar";
 import { zhSidebar } from "./sidebar";
 
+const siteHostname = process.env.SITE_HOSTNAME ?? "https://lljl500220.github.io/";
+
 export default hopeTheme({
-  hostname: "https://lljl500220.github.io/",
+  hostname: siteHostname,
 
   author: {
     name: "秦篆",
